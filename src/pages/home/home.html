@@ -1,0 +1,157 @@
+<ion-header>
+  <ion-navbar color="pqsBlue">
+    <ion-buttons start>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="ios-contact-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>perqs</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card color="pqsOrange">
+    <ion-card-content>
+      <ion-card-title>
+        Welcome to Venice Beach!
+      </ion-card-title>
+      <button ion-button color="light" outline tappable (click)="showGuide()">View Our Guide</button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- <h3>Browse Perqs by Category</h3>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-only round color="browseIcon">
+          <ion-icon name="ios-cafe-outline"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-only round color="browseIcon">
+          <ion-icon name="ios-restaurant-outline"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-only round color="browseIcon">
+          <ion-icon name="ios-cart-outline"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-only round color="browseIcon">
+          <ion-icon name="ios-bicycle-outline"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+
+  <!-- <ion-list no-lines>
+      <ion-item tappable *ngFor="let item of items" (click)="goToDetail(item.$key)">
+        <ion-thumbnail item-start>
+          <img src="item.imgSmall">
+        </ion-thumbnail>
+        <h2>{{item.name}}</h2>
+        <h3>{{item.account}}</h3>
+        <p>{{item.expires}}</p>
+      </ion-item>
+    </ion-list> -->
+
+  <!-- TO DO: Implement Tabs Once we Have Two Feed Types (+ Favoriting) -->
+  <!--***********  Segement tab ***********-->
+  <ion-segment mode="md" [(ngModel)]="segmentView" color="dkBlue">
+    <ion-segment-button value="one">
+      Recommended
+    </ion-segment-button>
+    <ion-segment-button value="two">
+      Following
+    </ion-segment-button>
+    <ion-segment-button value="three">
+      Liked
+    </ion-segment-button>
+  </ion-segment>
+
+  <!--***********  Segement one ***********-->
+  <div *ngIf="segmentView==='one'">
+    <div *ngIf="items.length == 0" class="no-data">
+      Sorry! We couldn't find any Perqs near you.
+      <p class="link" (click)="openLink()">Click here</p> to bring Perqs to your town
+    </div>
+    <div *ngIf="items.length != 0">
+      <div *ngFor="let item of items">
+        <ion-list no-lines padding>
+          <ion-item tappable (click)="showDetail(item)">
+            <ion-thumbnail item-start>
+              <img src={{item.image}}>
+            </ion-thumbnail>
+            <h2>{{item.account}}</h2>
+            <h3>{{item.perqName}}</h3>
+            <p [innerHtml] = loadFormatedDate(item.expires)></p>
+            <p>{{item.distance.toFixed(2)}} KM away</p>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+  </div>
+
+  <!-- ***********    Segement two  ***********-->
+  <!-- TO DO: Once Favoriting is Enabled, Add Feed to Home Page -->
+  <div *ngIf="segmentView==='two'">
+    <ion-list no-lines padding>
+      <ion-item tappable (click)="showDetail()">
+        <ion-thumbnail item-start>
+          <img src="assets/imgs/chair-1.png">
+        </ion-thumbnail>
+        <h2>Perq Name</h2>
+        <h3>Location Name</h3>
+        <p>Expires in 3..2..1..</p>
+      </ion-item>
+      <ion-item tappable (click)="showDetail()">
+        <ion-thumbnail item-start>
+          <img src="assets/imgs/chair-1.png">
+        </ion-thumbnail>
+        <h2>Perq Name</h2>
+        <h3>Location Name</h3>
+        <p>Expires in 3..2..1..</p>
+      </ion-item>
+      <ion-item tappable (click)="showDetail()">
+        <ion-thumbnail item-start>
+          <img src="assets/imgs/chair-1.png">
+        </ion-thumbnail>
+        <h2>Perq Name</h2>
+        <h3>Location Name</h3>
+        <p>Expires in 3..2..1..</p>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div *ngIf="segmentView==='three'">
+    <ion-list no-lines padding>
+      <ion-item tappable (click)="showDetail()">
+        <ion-thumbnail item-start>
+          <img src="assets/imgs/chair-1.png">
+        </ion-thumbnail>
+        <h2>Perq Name</h2>
+        <h3>Location Name</h3>
+        <p>Expires in 3..2..1..</p>
+      </ion-item>
+      <ion-item tappable (click)="showDetail()">
+        <ion-thumbnail item-start>
+          <img src="assets/imgs/chair-1.png">
+        </ion-thumbnail>
+        <h2>Perq Name</h2>
+        <h3>Location Name</h3>
+        <p>Expires in 3..2..1..</p>
+      </ion-item>
+      <ion-item tappable (click)="showDetail()">
+        <ion-thumbnail item-start>
+          <img src="assets/imgs/chair-1.png">
+        </ion-thumbnail>
+        <h2>Perq Name</h2>
+        <h3>Location Name</h3>
+        <p>Expires in 3..2..1..</p>
+      </ion-item>
+    </ion-list>
+  </div>
+
+</ion-content>

@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-navbar color="pqsBlue">
+    <ion-buttons start>
+      <!-- <button ion-button icon-only menuToggle>
+        <ion-icon name="ios-contact-outline"></ion-icon>
+      </button> -->
+    </ion-buttons>
+    <ion-title>Sign Up</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <img src="assets/imgs/logo.png" class="logo">
+  <form [formGroup]="regForm" (ngSubmit)="onSignup()">
+    <ion-list class="list" inset>
+      <h1 style="text-align:center;">We're excited to
+        <br>have you join Perqs!</h1>
+      <br>
+      <ion-item>
+        <ion-label stacked>Name</ion-label>
+        <ion-input type="text" placeholder="enter name" formControlName="name" required></ion-input>
+      </ion-item>
+      <p class="error_text" *ngIf="regForm.controls.name.errors && regForm.controls.name.dirty">Enter your name.</p>
+
+      <ion-item>
+        <ion-label stacked>Email</ion-label>
+        <ion-input type="email" placeholder="enter email" formControlName="email" name="email" required></ion-input>
+      </ion-item>
+      <p class="error_text" *ngIf="regForm.controls.email.errors && regForm.controls.email.dirty">Please provide a valid Email.</p>
+
+      <ion-item>
+        <ion-label stacked>Password</ion-label>
+        <ion-input type="password" ngModel name="password" placeholder="enter password" formControlName="pswrd"></ion-input>
+
+      </ion-item>
+      <p class="error_text" *ngIf="regForm.controls.pswrd.errors && regForm.controls.pswrd.dirty">Password should be equal to or greater than 6 digits.</p>
+
+      <ion-item>
+        <ion-label stacked>Confirm Password</ion-label>
+        <ion-input type="password" ngModel name="confirmPassword" placeholder="enter confirm password" formControlName="confirmPassword"></ion-input>
+      </ion-item>
+      <p class="error_text" *ngIf="regForm.controls.confirmPassword.errors && regForm.controls.confirmPassword.dirty">Password and confirm password not matched.</p>
+
+    </ion-list>
+    <ion-row>
+      <ion-col>
+        <button ion-button color="pqsOrange" block type="submit" [disabled]="!regForm.valid">Sign Up</button>
+      </ion-col>
+    </ion-row>
+  </form>
+  <div padding style="text-align:center; z-index:1000; width:100%">
+    <button ion-button color="pqsBlue" block outline (click)="goToLoginPage()">Already have an account? Sign In</button>
+  </div>
+
+</ion-content>

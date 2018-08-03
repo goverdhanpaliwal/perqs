@@ -1,0 +1,103 @@
+<ion-header>
+    <ion-navbar transparent [class.header-background]="showToolbar"  >
+        <ion-buttons (click)="closeModal()" >
+            <button color="light" ion-button icon-only>
+                <ion-icon name="md-close"></ion-icon>CLOSE
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content  no-padding  class="content" >
+
+    <div class="image-header">
+          <img src="assets/imgs/venice.png">
+          <h1 class="image-name "> Welcome to Venice Beach, CA!</h1>
+          <!-- <p> Here's a guide while you spend your time in town!</p> -->
+          <ion-fab  bottom right edge class="hello pop-in" (click)="addToFav('bottom')">
+            <button ion-fab color="pqsOrange"><ion-icon name="ios-map-outline"></ion-icon></button>
+          </ion-fab>
+    </div>
+
+    <ion-card>
+        <ion-card-header>
+          <h2 style="color:red;">VeniceBeachFun.com</h2>
+          <h1>Activities Checklist & Map</h1>
+          <p>Powered by VenicePaparazzi.com</p>
+        </ion-card-header>
+      </ion-card>
+
+    <ion-list padding>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Have a beach day at</h2>
+          <h3>Venice Beach</h3>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Walk and be entertained</h2>
+          <h3>on the world famous Venice Boardwalk</h3>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Take the Self Guided</h2>
+          <h3>Cultural Walking Tour</h3>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Snap a Selfie with the iconic</h2>
+          <h3>Venice Sign</h3>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Stroll</h2>
+          <h3>Abbot Kinney Blvd</h3>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Enjoy a leisure walk along</h2>
+          <h3>the Venice Canals</h3>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Check out</h2>
+          <h3>Washington Square</h3>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Walk high above the mighty</h2>
+          <h3>Pacific on the Venice Pier</h3>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Play or train at</h2>
+          <h3>the Venice Recreation and Parks Center</h3>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Train or Pose down at the iconic </h2>
+          <h3>outdoor Muscle Beach Gym</h3>
+        </ion-item>
+    </ion-list>
+
+</ion-content>

@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar color="pqsBlue">
+    <ion-buttons start>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="ios-contact-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="ios-map-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Perqs
+    </ion-title>
+  </ion-navbar>
+  <ion-toolbar no-border-top color="pqsBlue">
+    <ion-searchbar placeholder="Search Perqs" (ionInput)="filterItems($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <!-- TO DO: Enable Filter by Town -->
+  <!-- <ion-list>
+    <ion-item>
+      <ion-label>Filter By Location</ion-label>
+      <ion-select [(ngModel)]="gaming">
+        <ion-option value="ven">Venice Beach, CA</ion-option>
+        <ion-option value="sm">Santa Monica, CA</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list> -->
+
+<ion-list>
+  <ion-item *ngFor="let item of items">
+    <ion-thumbnail item-start>
+      <img src="img/logo.png">
+    </ion-thumbnail>
+    <h2>{{ item.name }} Buy three tacos, get <br> free chips and salsa</h2>
+    <h3> {{ item.account }} Tacos Por Favor</h3>
+    <p>Expires in 3..2..1..</p>
+    <button ion-button clear item-right>Detail</button>
+  </ion-item>
+</ion-list>
+
+</ion-content>

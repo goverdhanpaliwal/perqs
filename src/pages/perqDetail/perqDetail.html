@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar transparent [class.header-background]="showToolbar">
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-padding class="content">
+
+  <div class="image-header">
+    <img src="assets/imgs/perqBanner.png">
+    <h1 class="image-name "> Buy one get one 1/2 off</h1>
+    <!-- <p> Here's a guide while you spend your time in town!</p> -->
+    <ion-fab bottom right edge class="hello pop-in" (click)="addToFav('bottom')">
+      <button ion-fab color="light">
+        <ion-icon name="ios-heart-outline" color="danger"></ion-icon>
+      </button>
+    </ion-fab>
+  </div>
+
+  <div padding>
+    <h1 style="color:red;">Expires in 24 hours</h1>
+  </div>
+
+  <ion-list no-lines padding>
+    <h1>Provided by</h1>
+    <ion-item tappable (click)="showDetail()">
+      <ion-thumbnail item-start>
+        <img src={{items.image}}>
+      </ion-thumbnail>
+      <h2>{{items.account}}</h2>
+      <h3>{{items.name}}</h3>
+      <p> {{items.type}}</p>
+      <p> {{items.city}}, {{items.state}}</p>
+      <p> {{items.phone}}</p>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

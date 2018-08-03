@@ -1,0 +1,206 @@
+
+<ion-header>
+    <ion-navbar color="pqsBlue" [class.header-background]="showToolbar"  >
+        <ion-buttons (click)="closeModal()" >
+            <button color="light" ion-button icon-only>
+                <ion-icon name="md-close"></ion-icon>CLOSE
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <div id="profile1-info" class="test-class" padding>
+
+    <img src="assets/imgs/bada-bean.png" width="100" height="100">
+    <h3 id="profile1-name">Bada Bean Cawfee</h3>
+    <p>Seaside Heights, NJ</p>
+    <!--<p>{{(profile2 | async)?.company}} &bull; {{(profile2 | async)?.position}}</p> -->
+    <button ion-button *ngIf="!following"  block color="pqsOrange" (click)="follow()">Follow</button>
+    <button ion-button icon-left *ngIf="following"  block color="gray" (click)="follow()">
+      <ion-icon name="checkmark"></ion-icon>
+      Following
+    </button>
+  </div>
+
+
+<!--***********  Announcement  ***********-->
+
+  <ion-list no-lines text-wrap>
+      <ion-list-header>
+        <h2> Announcement</h2>
+      </ion-list-header>
+      <ion-item>
+        <p class="profile1-description">The Best On-the-Go Breakfast that you'll find on the Seaside Heights Boardwalk. Stop by, and we'll give you an offer you can't refuse...</p>
+      </ion-item>
+  </ion-list>
+
+  <ion-list no-lines text-wrap>
+      <ion-list-header>
+        <h2>My Loyalty</h2>
+        <p>Buy, 10 cups of cawfee, get your 11th cup on us!</p>
+      </ion-list-header>
+      <ion-item>
+        <rating [(ngModel)]="rate"
+          readOnly="true"
+          max="10"
+          emptyStarIconName="ios-cafe-outline"
+          halfStarIconName="ios-cafe-outline"
+          starIconName="ios-cafe"
+          nullable="false"
+          (ngModelChange)="onModelChange($event)"> <!--use it when you need to do something when user clicks on a star. in case you only need to change ngModel property, this property can be ommited.-->
+        </rating>
+      </ion-item>
+      <button ion-button *ngIf="!following"  block color="pqsOrange" (click)="follow()">Redeem</button>
+  </ion-list>
+
+  <!--***********  Segement tab ***********-->
+  <ion-segment mode="md" [(ngModel)]="segmentView" color="dkBlue">
+    <ion-segment-button value="one">
+      In Progress
+    </ion-segment-button>
+    <ion-segment-button value="two">
+      Featured
+    </ion-segment-button>
+    <ion-segment-button value="three">
+      Perqs
+    </ion-segment-button>
+    <ion-segment-button value="four">
+      More
+    </ion-segment-button>
+  </ion-segment>
+
+  <!--***********  Segement one ***********-->
+
+  <div *ngIf="segmentView==='one'">
+    <ion-list no-lines padding>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Buy, 10 cups of cawfee</h2>
+          <h3>get your 11th cup on us!</h3>
+          <p>3/10</p>
+        </ion-item>
+    </ion-list>
+  </div>
+
+  <div *ngIf="segmentView==='two'">
+    <ion-list no-lines padding>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Perq Name</h2>
+          <h3>Location Name</h3>
+          <p>Expires in 3..2..1..</p>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Perq Name</h2>
+          <h3>Location Name</h3>
+          <p>Expires in 3..2..1..</p>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Perq Name</h2>
+          <h3>Location Name</h3>
+          <p>Expires in 3..2..1..</p>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Perq Name</h2>
+          <h3>Location Name</h3>
+          <p>Expires in 3..2..1..</p>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Perq Name</h2>
+          <h3>Location Name</h3>
+          <p>Expires in 3..2..1..</p>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Perq Name</h2>
+          <h3>Location Name</h3>
+          <p>Expires in 3..2..1..</p>
+        </ion-item>
+    </ion-list>
+  </div>
+
+  <!--***********    Segement two  ***********-->
+  <div *ngIf="segmentView==='three'">
+    <ion-list no-lines padding>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Perq Name</h2>
+          <h3>Location Name</h3>
+          <p>Expires in 3..2..1..</p>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Perq Name</h2>
+          <h3>Location Name</h3>
+          <p>Expires in 3..2..1..</p>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/chair-1.png">
+          </ion-thumbnail>
+          <h2>Perq Name</h2>
+          <h3>Location Name</h3>
+          <p>Expires in 3..2..1..</p>
+        </ion-item>
+    </ion-list>
+  </div>
+
+  <!--***********    Segement three  ***********-->
+  <div *ngIf="segmentView==='four'">
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <button ion-button icon-only round color="browseIcon">
+            <ion-icon name="ios-call-outline"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col col-6>
+          <button ion-button icon-only round color="browseIcon">
+            <ion-icon name="ios-map-outline"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col col-4>
+          <button ion-button icon-only round color="browseIcon">
+            <ion-icon name="logo-snapchat"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col col-4>
+          <button ion-button icon-only round color="browseIcon">
+            <ion-icon name="logo-instagram"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col col-4>
+          <button ion-button icon-only round color="browseIcon">
+            <ion-icon name="logo-facebook"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+</ion-content>

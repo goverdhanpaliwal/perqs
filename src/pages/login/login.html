@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar color="pqsBlue">
+    <ion-buttons start>
+      <!-- <button ion-button icon-only menuToggle>
+        <ion-icon name="ios-contact-outline"></ion-icon>
+      </button> -->
+    </ion-buttons>
+    <ion-title>Login to Perqs</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="no-scroll">
+  <img src="assets/imgs/logo.png" class="logo">
+  <!-- <h2>Already a member? Login using your credentials:</h2> -->
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+    <ion-list class="list" inset>
+      <ion-item>
+        <ion-label stacked>Email</ion-label>
+        <ion-input type="email" name="email" formControlName="email" placeholder="enter your email" required></ion-input>
+      </ion-item>
+      <p class="error_text" *ngIf="loginForm.controls.email.errors && loginForm.controls.email.dirty">Please provide a valid Email.</p>
+      <ion-item>
+        <ion-label stacked>Password</ion-label>
+        <ion-input type="password" placeholder="password" formControlName="pswrd" name="password"></ion-input>
+      </ion-item>
+      <p class="error_text" *ngIf="loginForm.controls.pswrd.errors && loginForm.controls.pswrd.dirty">Password should be equal to or greater than 6 digits.</p>
+    </ion-list>
+    <ion-row >
+      <ion-col>
+        <button ion-button full color="pqsOrange" block type="submit" [disabled]="!loginForm.valid">Log In</button>
+      </ion-col>
+    </ion-row>
+  </form>
+  <div padding  text-center >
+    <p style="font-family:lato; font-size:14px; color:#343434;">Not a Member?</p>
+    <br>
+    <button ion-button color="pqsBlue" block outline (click)="onCreateNewAccountClick()">Sign Up</button>
+  </div>
+
+</ion-content>
+<ion-footer>
+  <div (click)="onForgotPasswordClick()" class="button button-light button-clear forgot-password">Forgot password?</div>
+</ion-footer>

@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-navbar color="pqsBlue">
+    <ion-buttons start>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="ios-contact-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Profile Settings
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+  <ion-label>Location</ion-label>
+  <ion-toggle checked="false"></ion-toggle>
+</ion-item>
+
+<ion-item>
+<ion-label>Notifications</ion-label>
+<ion-toggle checked="false"></ion-toggle>
+
+
+</ion-item>
+
+  <ion-list radio-group>
+    <ion-list-header>
+      Check-In Visibility
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>Public</ion-label>
+      <ion-radio checked="true" value="public"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Private</ion-label>
+      <ion-radio value="private"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <ion-item>
+  <ion-label>SMS</ion-label>
+  <ion-checkbox color="dark" checked="true"></ion-checkbox>
+</ion-item>
+
+<ion-item>
+  <ion-label>App Notifications</ion-label>
+  <ion-checkbox color="dark" checked="true"></ion-checkbox>
+</ion-item>
+
+<ion-item>
+  <ion-label>Email</ion-label>
+  <ion-checkbox color="dark" checked="true"></ion-checkbox>
+</ion-item>
+</ion-content>

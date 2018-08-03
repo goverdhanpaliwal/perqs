@@ -1,0 +1,34 @@
+<ion-menu [content]="nav">
+  <ion-header>
+  </ion-header>
+  <ion-content padding>
+    <ion-grid no-padding style="margin-top:4vh; margin-left:2.5vh; margin-bottom:2.5vh">
+      <ion-row align-items-end>
+        <ion-col col-auto>
+          <img style="width:20%; margin-bottom:2vh" src="assets/imgs/logo.png">
+        </ion-col>
+
+        <ion-col col-auto style="margin-left:8vh">
+        </ion-col>
+      </ion-row>
+      <ion-row align-items-end>
+        <ion-col col-auto>
+          <p style="color:#178FB8">WELCOME</p>
+          <h1>{{name}}</h1>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-list no-lines>
+      <button ion-item icon-left (click)="onLoad(rootPage)" *ngIf ="isAuthenticated"><ion-icon name="ios-home-outline"></ion-icon>Home</button>
+      <button ion-item icon-left (click)="onLoad(loginPage)" *ngIf ="!isAuthenticated"><ion-icon name="log-in"></ion-icon>Log In</button>
+      <button ion-item icon-left (click)="onLoad(signupPage)" *ngIf ="!isAuthenticated"><ion-icon name="person"></ion-icon>Sign Up</button>
+      <!-- TO DO: Once we start asking users for push notif and location permissions, we will need to add these to the settings page -->
+      <!-- <button ion-item icon-left (click)="onLoad(profilePage)" *ngIf ="isAuthenticated"><ion-icon name="ios-settings-outline"></ion-icon>Settings</button> -->
+      <button ion-item icon-left (click)="onLoad(profilePage)" *ngIf ="isAuthenticated"><ion-icon name="ios-send-outline"></ion-icon>Provide Us Feedback!</button>
+      <button ion-item icon-left (click)="onLogout()" *ngIf ="isAuthenticated"><ion-icon name="log-out"></ion-icon>Logout</button>
+      <button ion-item icon-left (click)="onLoad(profilePage)" *ngIf ="isAuthenticated"><ion-icon name="ios-share-outline"></ion-icon>Share with a Friend</button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-nav [root]="rootPage" #nav></ion-nav>

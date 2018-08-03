@@ -1,0 +1,8 @@
+{
+  "name": "perqs-v1.0",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "pro_id": "3FCC6A87"
+}
