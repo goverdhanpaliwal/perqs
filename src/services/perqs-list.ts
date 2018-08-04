@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import { AuthService } from "./auth";
 declare var GeoFire: any;
 @Injectable()
+
 export class PerqListService {
 
   constructor(private authService: AuthService) {
@@ -83,20 +84,22 @@ export class PerqListService {
       let i = 0;
       var firebaseRef = firebase.database().ref('favourites/' + userId);
       return new Promise((resolve, reject) => {
-        firebaseRef.once('value', (jobsSnapshot) => {
+        firebaseRef.once('value', function (jobsSnapshot) {
           if (!jobsSnapshot.exists || jobsSnapshot.numChildren() == 0) {
             resolve(items);
           }
-          jobsSnapshot.forEach(function (childSnapshot) {
+          let snapshotObj = jobsSnapshot.val();
+          var keyNames = Object.keys(snapshotObj);
+          for (let name of keyNames) {
             i++;
-            if (childSnapshot.val().perqsId == perqsId) {
-              items.key = childSnapshot.key;
+            if (snapshotObj[name].perqsId == perqsId) {
+              items.key = snapshotObj[name].perqsId;
               items.isFav = true;
             }
-            if (i == jobsSnapshot.numChildren()) {
-              resolve(items);
-            }
-          });
+          }
+          if (i == jobsSnapshot.numChildren()) {
+            resolve(items);
+          }
 
 
         }, function (error) {
