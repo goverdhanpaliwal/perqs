@@ -24,7 +24,7 @@ export class LocationsList {
     private dataservice: DataService,
     public common: CommonProvider,
     public changeDetector: ChangeDetectorRef,
-    private perksSewrvice: PerqListService,
+    private perksService: PerqListService,
     public modalCtrl: ModalController) {
     var me = this;
     let options = { enableHighAccuracy: true, timeout: 30000 };
@@ -56,7 +56,7 @@ export class LocationsList {
   getPerks() {
     var me = this;
     me.common.startLoading();
-    this.perksSewrvice.perqsList(this.userLocation.latitude, this.userLocation.longitude)
+    this.perksService.perqsList(this.userLocation.latitude, this.userLocation.longitude)
       .then(data => {
         // me.items =data;
         me.common.closeLoading();

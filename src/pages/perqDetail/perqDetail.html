@@ -11,7 +11,7 @@
     <!-- <p> Here's a guide while you spend your time in town!</p> -->
     <ion-fab bottom right edge class="hello pop-in" (click)="addToFav('bottom')">
       <button ion-fab color="light">
-        <ion-icon name="ios-heart-outline" color="danger"></ion-icon>
+        <ion-icon    [name]="isFavAdded ? 'ios-heart' :'ios-heart-outline'" color="danger"></ion-icon>
       </button>
     </ion-fab>
   </div>

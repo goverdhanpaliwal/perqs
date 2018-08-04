@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular';
-import { retry } from 'rxjs/operators/retry';
 
 @Injectable()
 export class DataService {

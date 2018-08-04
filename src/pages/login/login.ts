@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { LoadingController, MenuController } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { LoadingController, MenuController, NavController, AlertController } from 'ionic-angular';
 import { Validators, FormGroup, FormControl, AbstractControl } from "@angular/forms";
 import { AuthService } from '../../services/auth';
 import { CommonProvider } from "../../providers/common/common";
@@ -23,6 +21,7 @@ export class LoginPage {
     private common: CommonProvider,
     private navCtrl: NavController,
     private dataservice: DataService,
+    private changeDetector: ChangeDetectorRef,
     public events: Events,
     private alertCrtl: AlertController) {
     this.menu.swipeEnable(false);
@@ -33,7 +32,6 @@ export class LoginPage {
       pswrd: new FormControl("", Validators.compose([Validators.required, Validators.minLength(6)])
       )
     });
-
   }
 
   onLogin() {
@@ -46,7 +44,7 @@ export class LoginPage {
         loading.dismiss();
         this.dataservice.setUserData(data.currentUser);
         this.events.publish('profile', data.name);
-       // this.navCtrl.setRoot(HomePage);
+        // this.navCtrl.setRoot(HomePage);
       })
       .catch(error => {
         loading.dismiss();
@@ -105,6 +103,9 @@ export class LoginPage {
       ]
     });
     alert.present();
-
+  }
+  
+  onChange(){
+    this.changeDetector.detectChanges();
   }
 }

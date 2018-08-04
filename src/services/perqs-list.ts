@@ -62,17 +62,92 @@ export class PerqListService {
               if (i == j)
                 resolve(perqs);
             });
+          });
+        }, function (error) {
+          reject(error);
+        });
 
+      }, function (error) {
+        reject(error);
+      });
+    });
+
+  }
+
+  perqsFavCheck(perqsId, userId): Promise<any> {
+    {
+      let items = {
+        key: '',
+        isFav: false
+      };
+      let i = 0;
+      var firebaseRef = firebase.database().ref('favourites/' + userId);
+      return new Promise((resolve, reject) => {
+        firebaseRef.once('value', (jobsSnapshot) => {
+          if (!jobsSnapshot.exists || jobsSnapshot.numChildren() == 0) {
+            resolve(items);
+          }
+          jobsSnapshot.forEach(function (childSnapshot) {
+            i++;
+            if (childSnapshot.val().perqsId == perqsId) {
+              items.key = childSnapshot.key;
+              items.isFav = true;
+            }
+            if (i == jobsSnapshot.numChildren()) {
+              resolve(items);
+            }
           });
 
 
-
+        }, function (error) {
+          reject(error);
         });
 
-      });
+      })
+    }
+  }
+
+  removeFav(perqsId, userId, key): Promise<any> {
+
+    let items = {
+      key: '',
+      isFav: true
+    };
+    var firebaseRef = firebase.database().ref('favourites/' + userId);
+    return new Promise((resolve, reject) => {
+      if (key != "") {
+        firebaseRef.child(key).remove().then(function (favData) {
+          items.key = "";
+          items.isFav = false;
+          resolve(items);
+        }, function (error) {
+          reject(error);
+        });
+
+      }
 
 
-    });
+    })
+  }
+  addFav(perqsId, userId): Promise<any> {
+    {
+      let items = {
+        key: '',
+        isFav: false
+      };
+      var firebaseRef = firebase.database().ref('favourites/' + userId);
+      return new Promise((resolve, reject) => {
+        firebaseRef.push({
+          'perqsId': perqsId
+        }).then(function (favData) {
+          items.key = favData.getKey();
+          items.isFav = true;
+          resolve(items);
+        }, function (error) {
+          reject(error);
+        });
 
+      })
+    }
   }
 }

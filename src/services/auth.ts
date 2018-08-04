@@ -18,6 +18,7 @@ export class AuthService {
       });
     });
   }
+
   saveProfileData(currentUser, name) {
     firebase.database().ref('/profile/' + currentUser.uid).set({
       name: name,
@@ -25,12 +26,13 @@ export class AuthService {
       email: currentUser.email
     });
   }
-  signin(email: string, password: string) : Promise<any> {
+
+  signin(email: string, password: string): Promise<any> {
     return new Promise((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(email, password).then(function (user) {
         var currentUser = firebase.auth().currentUser;
         firebase.database().ref('/profile/' + currentUser.uid).once('value').then(function (profileUser) {
-          let  userName = profileUser.val().name;
+          let userName = profileUser.val().name;
           var obj = {
             currentUser: currentUser,
             name: userName
@@ -38,6 +40,17 @@ export class AuthService {
           resolve(obj);
         });
 
+      }, function (error) {
+        reject(error);
+      });
+    });
+  }
+
+  getProfileInfo(): Promise<any> {
+    var currentUser = firebase.auth().currentUser;
+    return new Promise((resolve, reject) => {
+      firebase.database().ref('/profile/' + currentUser.uid).once('value').then(function (profileUser) {
+        resolve(profileUser.val());
       }, function (error) {
         reject(error);
       });

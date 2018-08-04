@@ -12,6 +12,7 @@ import { ProfilePage } from '../pages/profile/profile';
 import { AuthService } from '../services/auth';
 import { HomePage } from '../pages/home/home';
 import { PerqDetail } from '../pages/perqDetail/perqDetail';
+import { DataService } from '../services/data.service';
 @Component({
   templateUrl: 'app.html'
 })
@@ -30,6 +31,7 @@ export class MyApp {
     statusBar: StatusBar,
     private loadingCtrl: LoadingController,
     public events: Events,
+    public dataService:DataService,
     public changeDetector: ChangeDetectorRef,
     splashScreen: SplashScreen) {
 
@@ -42,22 +44,30 @@ export class MyApp {
         this.name = name;
       });
       var me = this;
+
       firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          me.isAuthenticated = true;
-          me.rootPage = TabsPage;
-          me.changeDetector.detectChanges();
-        } else {
-          me.isAuthenticated = false;
-          me.rootPage = (localStorage.getItem("isFirstTimeLoginTrue") == 'true') ? LoginPage : 'Intro';
-          me.changeDetector.detectChanges();
-        }
+        setTimeout(() => {
+          if (user) {
+            me.isAuthenticated = true;
+            me.rootPage = TabsPage;
+            this.dataService.setUserData(user);
+            me.authService.getProfileInfo().then((profile) => {
+              me.events.publish('profile', profile.name);
+            });
+            me.changeDetector.detectChanges();
+          } else {
+            me.isAuthenticated = false;
+            me.rootPage = (localStorage.getItem("isFirstTimeLoginTrue") == 'true') ? LoginPage : 'Intro';
+            me.changeDetector.detectChanges();
+          }
+        }, 1000);
+
       });
     });
-   
+
 
   }
- 
+
   onLoad(page: any) {
     this.nav.setRoot(page);
     this.menuCtrl.close();

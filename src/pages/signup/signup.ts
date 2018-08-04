@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ChangeDetectorRef } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
 import { AuthService } from "../../services/auth";
@@ -21,16 +21,17 @@ export class SignupPage {
     private alertCrtl: AlertController,
     private navCtrl: NavController,
     private common: CommonProvider,
+    private changeDetector:ChangeDetectorRef,
     public events: Events,
     private dataservice: DataService,
-    private formBuilder: FormBuilder,  
+    private formBuilder: FormBuilder,
     private modal: ModalController) {
     this.regForm = formBuilder.group({
       name: ['', Validators.compose([Validators.required])],
       email: ['', Validators.compose([Validators.required, this.common.validateEmail])],
       confirmPassword: ['', Validators.compose([Validators.required])],
       pswrd: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
-    }, { validator: this.matchingPasswords('pswrd', 'confirmPassword') }
+    }, { validator: this.matchingPasswords('pswrd', 'confirmPassword') },
     );
     localStorage.setItem("isFirstTimeLoginTrue", 'true');
   }
@@ -57,12 +58,12 @@ export class SignupPage {
       content: "Signing you up!"
     });
     loading.present();
-    this.authService.signup(this.regForm.value.email,this.regForm.value.pswrd,this.regForm.value.name)
+    this.authService.signup(this.regForm.value.email, this.regForm.value.pswrd, this.regForm.value.name)
       .then(data => {
         loading.dismiss();
-        this.events.publish('profile',data.name);
+        this.events.publish('profile', data.name);
         this.dataservice.setUserData(data.currentUser);
-     //   this.navCtrl.setRoot(HomePage);
+        //   this.navCtrl.setRoot(HomePage);
       })
       .catch(error => {
         loading.dismiss();
@@ -74,5 +75,7 @@ export class SignupPage {
         alert.present();
       })
   }
-
+  onChange(){
+    this.changeDetector.detectChanges();
+  }
 }

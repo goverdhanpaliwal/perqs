@@ -60,8 +60,16 @@ export class LocationsListMapPage {
         };
 
         me.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-       
-        me.addMarkersToMap()
+        var mapMarker = new google.maps.Marker({
+            position: latLng,
+            animation: google.maps.Animation.DROP,
+            markerSelected: false,
+            icon: {
+                url: 'assets/imgs/you.png',
+            },
+        });
+        mapMarker.setMap(this.map);
+        me.addMarkersToMap();
     }
 
 
@@ -74,17 +82,13 @@ export class LocationsListMapPage {
                 position: position,
                 animation: google.maps.Animation.DROP,
                 markerSelected: true,
-                title: items.name,
-                email: items.email,
-                web: items.web,
-                phone: items.phone,
 
                 //**** Custom Marker Symbols ****/
                 //icon:  'assets/red_pin72x96.png'
                 icon: {
                     url: 'assets/imgs/other.png',
                     //The size image file.
-                //    size: new google.maps.Size(72, 96),
+                    //    size: new google.maps.Size(72, 96),
                     // we want to render @ 30x30 logical px (@2x dppx or 'Retina')
                     scaledSize: new google.maps.Size(40, 52),
                     //The point on the image to measure the anchor from. 0, 0 is the top left.
@@ -96,7 +100,7 @@ export class LocationsListMapPage {
                 anchorPoint: new google.maps.Point(0, -40)
             });
             mapMarker.setMap(this.map);
-               this.addInfoWindowToMarker(mapMarker,items);
+            this.addInfoWindowToMarker(mapMarker, items);
             //  this.map.setCenter(position);
         }
 
@@ -104,19 +108,17 @@ export class LocationsListMapPage {
 
 
 
-    addInfoWindowToMarker(marker,data) {
-        let id = data.key;
+    addInfoWindowToMarker(marker, data) {
+        let id = data.locationKey;
+        debugger;
         var infoWindowContent = '<div id="iw-container">' +
             '<div class="iw-content">' +
             '<div class="iw-subTitle">' + data.account + '</div>' +
             '<br><b>Name:</b> ' + data.name + '<br><b>city:</b>' + data.city + '<br></p>' +
-            '<button  style="font-weight: 300;height: 3rem;background-color: #00B140;width: 126px;margin: -15px 0px 0px 70px;"  class="button button-md button-default button-default-md button-md-secondary">View Details</button>' +
+            '<button id =' + id + '  style="font-weight: 300;height: 3rem;background-color: #00B140;width: 126px;margin: -15px 0px 0px 70px;"  class="button button-md button-default button-default-md button-md-secondary">View Details</button>' +
             '</div>' +
             //'<div id="do-something-button">button</div>' +
             '</div>';
-            // document.getElementById(id).addEventListener('click', function () {
-            //   alert(id);
-            //   });
         var infoWindow = new google.maps.InfoWindow();
         // infoWindow.setOptions({
         //     disableAutoPan:false
@@ -126,12 +128,16 @@ export class LocationsListMapPage {
         marker.addListener('click', () => {
             this.closeAllInfoWindows();
             infoWindow.open(this.map, marker);
+
             // add listener that will capture the click event of the infoWindow
             // google.maps.event.addListener(infoWindow, 'domready', () => {
-            //   document.getElementById('do-something-button').addEventListener('click', () => {
-            //      this.doSomething();
-            //   });
-            // });
+                var me =this;
+            document.getElementById(id).addEventListener('click', function () {
+               console.log(this.id);
+               let selectedItem =   me.items.find(item => item.locationKey === this.id);
+               // pass data to details page;
+            });
+
 
         });
         this.infoWindows.push(infoWindow);
@@ -146,8 +152,7 @@ export class LocationsListMapPage {
             window.close();
         }
     }
-    showList()
-    {
+    showList() {
         this.navCtrl.pop();
     }
     dismiss() {

@@ -27,7 +27,7 @@ export class HomePage {
     private dataservice: DataService,
     public modalCtrl: ModalController,
     public changeDetector:ChangeDetectorRef,
-    private perksSewrvice: PerqListService,
+    private perksService: PerqListService,
     public loadingCtrl: LoadingController,
     private iab: InAppBrowser
     //public afDB: AngularFireDatabase)
@@ -61,7 +61,7 @@ export class HomePage {
   getPerks() {
     var me = this;
     me.common.startLoading();
-    this.perksSewrvice.perqsList(this.userLocation.latitude, this.userLocation.longitude)
+    this.perksService.perqsList(this.userLocation.latitude, this.userLocation.longitude)
       .then(data => {
         me.common.closeLoading();
         data.sort(function (a, b) {
