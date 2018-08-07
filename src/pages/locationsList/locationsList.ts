@@ -56,9 +56,9 @@ export class LocationsList {
   getPerks() {
     var me = this;
     me.common.startLoading();
-    this.perksService.perqsList(this.userLocation.latitude, this.userLocation.longitude)
+    this.perksService.locationList(this.userLocation.latitude, this.userLocation.longitude)
       .then(data => {
-        // me.items =data;
+    console.log(data);
         me.common.closeLoading();
         data.sort(function (a, b) {
           return a.distance - b.distance;
@@ -89,9 +89,9 @@ export class LocationsList {
     this.changeDetector.detectChanges();
   }
 
-  showDetail() {
-    const showDetail = this.modalCtrl.create('LocationDetail');
-    showDetail.present();
+  showDetail(record) {
+    this.navCtrl.push('LocationDetail',{'LocationData':  record });
+
   }
 
   showDetail1() {

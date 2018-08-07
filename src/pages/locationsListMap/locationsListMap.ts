@@ -113,8 +113,8 @@ export class LocationsListMapPage {
         debugger;
         var infoWindowContent = '<div id="iw-container">' +
             '<div class="iw-content">' +
-            '<div class="iw-subTitle">' + data.account + '</div>' +
-            '<br><b>Name:</b> ' + data.name + '<br><b>city:</b>' + data.city + '<br></p>' +
+            '<div class="iw-subTitle">' + data.locationName + '</div>' +
+            '<br><b>city:</b>' + data.city + '<br></p>' +
             '<button id =' + id + '  style="font-weight: 300;height: 3rem;background-color: #00B140;width: 126px;margin: -15px 0px 0px 70px;"  class="button button-md button-default button-default-md button-md-secondary">View Details</button>' +
             '</div>' +
             //'<div id="do-something-button">button</div>' +
@@ -136,6 +136,7 @@ export class LocationsListMapPage {
                console.log(this.id);
                let selectedItem =   me.items.find(item => item.locationKey === this.id);
                // pass data to details page;
+                   me.navCtrl.push('LocationDetail',{'LocationData':  selectedItem });
             });
 
 

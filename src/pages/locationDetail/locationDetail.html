@@ -1,11 +1,12 @@
 
 <ion-header>
     <ion-navbar color="pqsBlue" [class.header-background]="showToolbar"  >
-        <ion-buttons (click)="closeModal()" >
+        <!--<ion-buttons (click)="closeModal()" >
             <button color="light" ion-button icon-only>
                 <ion-icon name="md-close"></ion-icon>CLOSE
             </button>
-        </ion-buttons>
+        </ion-buttons>-->
+    <ion-title>perqs</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -14,9 +15,9 @@
 
   <div id="profile1-info" class="test-class" padding>
 
-    <img src="assets/imgs/shore-and-more.png" width="100" height="100">
-    <h3 id="profile1-name">Shore & More General Store</h3>
-    <p>Seaside Park, NJ</p>
+    <img src="{{locationItem.locationImage}}" width="100" height="100">
+    <h3 id="profile1-name">{{locationItem.name}}</h3>
+    <p>{{locationItem.city}}, {{locationItem.state}}</p>
     <!--<p>{{(profile2 | async)?.company}} &bull; {{(profile2 | async)?.position}}</p> -->
     <button ion-button *ngIf="!following"  block color="pqsOrange" (click)="follow()">Follow</button>
     <button ion-button icon-left *ngIf="following"  block color="gray" (click)="follow()">
@@ -33,12 +34,12 @@
         <h2> Announcement</h2>
       </ion-list-header>
       <ion-item>
-        <p class="profile1-description">Stop in on your way to the beach! We have all of your essentials!</p>
+        <p class="profile1-description">{{locationItem.announcement}}</p>
       </ion-item>
   </ion-list>
 
   <!--***********  Segement tab ***********-->
-  <ion-segment mode="md" [(ngModel)]="segmentView" color="dkBlue">
+  <ion-segment mode="md" [(ngModel)]="segmentView" color="dkBlue" (ionChange)="segmentChanged($event)">
     <ion-segment-button value="one">
       Featured
     </ion-segment-button>
@@ -51,8 +52,8 @@
   </ion-segment>
 
   <!--***********  Segement one ***********-->
-  <div *ngIf="segmentView==='one'">
-    <ion-list no-lines padding>
+  <div *ngIf="segmentView ==='one'">
+    <!--<ion-list no-lines padding>
         <ion-item>
           <ion-thumbnail item-start>
             <img src="assets/imgs/chair-1.png">
@@ -101,41 +102,34 @@
           <h3>Location Name</h3>
           <p>Expires in 3..2..1..</p>
         </ion-item>
-    </ion-list>
+    </ion-list>-->
+    <p>No features added Yet!</p>
   </div>
 
   <!--***********    Segement two  ***********-->
-  <div *ngIf="segmentView==='two'">
-    <ion-list no-lines padding>
-        <ion-item>
-          <ion-thumbnail item-start>
-            <img src="assets/imgs/chair-1.png">
-          </ion-thumbnail>
-          <h2>Perq Name</h2>
-          <h3>Location Name</h3>
-          <p>Expires in 3..2..1..</p>
-        </ion-item>
-        <ion-item>
-          <ion-thumbnail item-start>
-            <img src="assets/imgs/chair-1.png">
-          </ion-thumbnail>
-          <h2>Perq Name</h2>
-          <h3>Location Name</h3>
-          <p>Expires in 3..2..1..</p>
-        </ion-item>
-        <ion-item>
-          <ion-thumbnail item-start>
-            <img src="assets/imgs/chair-1.png">
-          </ion-thumbnail>
-          <h2>Perq Name</h2>
-          <h3>Location Name</h3>
-          <p>Expires in 3..2..1..</p>
-        </ion-item>
-    </ion-list>
+  <div *ngIf="segmentView ==='two'">
+       <div *ngIf="items.length == 0" class="no-data">
+      Sorry! We couldn't find any Perqs near you.
+      <p class="link" (click)="openLink()">Click here</p> to bring Perqs to your town
+    </div>
+    <div *ngIf="items.length != 0">
+      <div *ngFor="let item of items">
+        <ion-list no-lines padding>
+          <ion-item tappable (click)="showDetail(item)">
+            <ion-thumbnail item-start>
+              <img src={{item.perqImage}}>
+            </ion-thumbnail>
+            <h2>{{item.perqName}}</h2>
+            <p>{{item.perqLocation}}</p>
+            <p [innerHtml] = loadFormatedDate(item.expires)></p>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
   </div>
 
   <!--***********    Segement three  ***********-->
-  <div *ngIf="segmentView==='three'">
+  <div *ngIf="segmentView ==='three'">
     <ion-grid>
       <ion-row>
         <ion-col col-6>

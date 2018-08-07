@@ -28,41 +28,102 @@ export class PerqListService {
           resolve(perqs);
         }
       });
-
-      let j = 0;
-      let i = 0;
       geoQuery.on("key_entered", function (key, location, distance) {
         eventFired = true;
         let knDistance = distance;
-        j++;
-
         firebaseRef.child(key).once('value', function (jobsSnapshot) {
           let locationId = jobsSnapshot.val().locationId;
           firebase.database().ref('locations').child(locationId).once('value').then(function (locationData) {
-            firebase.database().ref('perqs').child(locationData.val().perqsId).once('value').then(function (perqsData) {
-              i++;
-              perqs.push({
-                'locationKey': locationData.key,
-                'perqsKey': perqsData.key,
-                'announcement': locationData.val().announcement,
-                'city': locationData.val().city,
-                'facebook': locationData.val().facebook,
-                'locationLat': locationData.val().locationLat,
-                'locationLon': locationData.val().locationLon,
-                'name': locationData.val().name,
-                'phone': locationData.val().phone,
-                'state': locationData.val().state,
-                'image': perqsData.val().image,
-                'type': perqsData.val().type,
-                'account': perqsData.val().account,
-                'perqName': perqsData.val().name,
-                'expires': perqsData.val().expires,
-                'distance': knDistance
+            console.log(locationData);
+            firebase.database().ref('perqs').orderByChild('locationId').equalTo(locationId).once('value').then(function (perqsData) {
+              // i++;
+              var keyNames = Object.keys(perqsData.val());
+              for (let name of keyNames) {
+                console.log(name);
+                var perqsRec = perqsData.val()[name];
+                perqs.push({
+                  'locationKey': locationData.key,
+                  'perqsKey': name,
+                  'announcement': locationData.val().announcement,
+                  'city': locationData.val().city,
+                  'instagram': locationData.val().instagram,
+                  'snapchat': locationData.val().snapchat,
+                  'facebook': locationData.val().facebook,
+                  'locationLat': locationData.val().lat,
+                  'locationLon': locationData.val().lon,
+                  'locationName': locationData.val().name,
+                  'phone': locationData.val().phone,
+                  'state': locationData.val().state,
+                  'locationImage': locationData.val().image,
+                  'perqImage': perqsRec.image,
+                  'perqLocation': perqsRec.location,
+                  // 'type': perqsRec.type,
+                  'account': perqsRec.account,
+                  'perqName': perqsRec.name,
+                  'expires': perqsRec.expires,
+                  'distance': knDistance
 
-              });
-              if (i == j)
-                resolve(perqs);
+                });
+              }
+              resolve(perqs);
             });
+          });
+        }, function (error) {
+          reject(error);
+        });
+
+      }, function (error) {
+        reject(error);
+      });
+    });
+
+  }
+
+  locationList(latitude: number, longitude: number): Promise<any> {
+    var me = this;
+    return new Promise((resolve, reject) => {
+      var firebaseRef = firebase.database().ref('geofire');
+      var geoFire = new GeoFire(firebaseRef);
+      var geoQuery = geoFire.query({
+        center: [latitude, longitude],
+        radius: 400 // 1 miles = 1.60934 KM
+      });
+      let eventFired = false;
+
+      var locations = [];
+      var onReadyRegistration = geoQuery.on("ready", function () {
+        geoQuery.cancel();
+        if (!eventFired) {
+          resolve(locations);
+        }
+      });
+      geoQuery.on("key_entered", function (key, location, distance) {
+        eventFired = true;
+        let knDistance = distance;
+        firebaseRef.child(key).once('value', function (jobsSnapshot) {
+          let locationId = jobsSnapshot.val().locationId;
+          firebase.database().ref('locations').child(locationId).once('value').then(function (locationData) {
+            console.log(locationData);
+            locations.push({
+              'locationKey': locationData.key,
+              'perqsKey': name,
+              'announcement': locationData.val().announcement,
+              'city': locationData.val().city,
+              'instagram': locationData.val().instagram,
+              'snapchat': locationData.val().snapchat,
+              'facebook': locationData.val().facebook,
+              'locationLat': locationData.val().lat,
+              'locationLon': locationData.val().lon,
+              'locationName': locationData.val().name,
+              'phone': locationData.val().phone,
+              'state': locationData.val().state,
+              'locationImage': locationData.val().image,
+              'distance': knDistance
+
+            });
+
+            resolve(locations);
+
           });
         }, function (error) {
           reject(error);
@@ -86,14 +147,14 @@ export class PerqListService {
       return new Promise((resolve, reject) => {
         firebaseRef.once('value', function (jobsSnapshot) {
           if (!jobsSnapshot.exists || jobsSnapshot.numChildren() == 0) {
-            resolve(items);
+          return  resolve(items);
           }
           let snapshotObj = jobsSnapshot.val();
           var keyNames = Object.keys(snapshotObj);
           for (let name of keyNames) {
             i++;
             if (snapshotObj[name].perqsId == perqsId) {
-              items.key = snapshotObj[name].perqsId;
+              items.key = name;
               items.isFav = true;
             }
           }
@@ -153,4 +214,33 @@ export class PerqListService {
       })
     }
   }
+
+  getPerqs(locationKey): Promise<any> {
+    {
+      var perqs = [];
+      var me = this;
+      return new Promise((resolve, reject) => {
+        firebase.database().ref('perqs/').orderByChild('locationId').equalTo(locationKey).once('value').then(function (perqsData) {
+          var keyNames = Object.keys(perqsData.val());
+          for (let name of keyNames) {
+            console.log(name);
+            var perqsRec = perqsData.val()[name];
+            perqs.push({
+              'perqsKey': name,
+              'perqImage': perqsRec.image,
+              'perqLocation': perqsRec.location,
+              'account': perqsRec.account,
+              'perqName': perqsRec.name,
+              'expires': perqsRec.expires
+            });
+          }
+          resolve(perqs);
+        }, function (error) {
+          reject(error);
+        });
+
+      })
+    }
+  }
+
 }

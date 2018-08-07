@@ -12,18 +12,13 @@ import { CommonProvider } from '../../providers/common/common';
 })
 export class PerqDetail {
   items = {
-    image: "",
-    name: "",
+    perqsImage: "",
+    perqLocation:"",
     account: "",
-    distance: "",
-    announcement: "",
     perqsKey: "",
-    facebook: "",
-    phone: "",
-    state: "",
-    type: "",
     perqName: "",
-    expires: ""
+    expires: "",
+    locationKey:"",
   };
   isFavAdded: Boolean = false;
   favPerksKey = "";
@@ -39,6 +34,7 @@ export class PerqDetail {
     private perksService: PerqListService,
     public modalCtrl: ModalController) {
     this.items = navParams.data.item;
+    console.log('item '+this.items.perqLocation);
     let user = this.dataService.getUserData();
     var me = this;
     me.common.startLoading();
@@ -56,10 +52,6 @@ export class PerqDetail {
     this.viewCtrl.dismiss();
   }
 
-  showDetail() {
-    const showDetail = this.modalCtrl.create('LocationDetail');
-    showDetail.present();
-  }
 
   addToFav() {
     let user = this.dataService.getUserData();
@@ -81,6 +73,21 @@ export class PerqDetail {
         me.cd.detectChanges();
       });
     }
+  }
+
+  loadFormatedDate(date) {
+    if (date != null && date != 0) {
+      if (date < new Date().getTime()) {
+        return "";
+      }
+      var dates = this.common.formatDate(date);
+      return "Expires on " +dates;
+    }
+    else {
+      return "";
+    }
+
+
   }
   // ionViewDidLoad() {
   //   itemRef.on('value', itemSnapshot => {

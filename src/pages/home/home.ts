@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef,ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, LoadingController } from 'ionic-angular';
 // import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database-deprecated';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -26,15 +26,19 @@ export class HomePage {
     private geolocation: Geolocation,
     private dataservice: DataService,
     public modalCtrl: ModalController,
-    public changeDetector:ChangeDetectorRef,
-    private perksService: PerqListService,
+    public changeDetector: ChangeDetectorRef,
+    private perqsService: PerqListService,
     public loadingCtrl: LoadingController,
     private iab: InAppBrowser
     //public afDB: AngularFireDatabase)
   ) {
     var me = this;
     let options = { enableHighAccuracy: true, timeout: 30000 };
-
+      //  let userLoc = {
+      //     lat: 42.89,
+      //     lng:  129.50
+      //   }
+      //   this.dataservice.setUserLocation(userLoc);
     if (this.dataservice.getUserLocation() == null) {
 
       me.geolocation.getCurrentPosition(options).then((resp) => {
@@ -45,7 +49,7 @@ export class HomePage {
           lng: resp.coords.longitude
         }
         this.dataservice.setUserLocation(userLoc);
-        me.getPerks();
+        me.getPerqs();
       }).catch((error) => {
 
       });
@@ -55,13 +59,13 @@ export class HomePage {
       let location = this.dataservice.getUserLocation();
       me.userLocation.latitude = location.lat;
       me.userLocation.longitude = location.lng;
-      me.getPerks();
+      me.getPerqs();
     }
   }
-  getPerks() {
+  getPerqs() {
     var me = this;
     me.common.startLoading();
-    this.perksService.perqsList(this.userLocation.latitude, this.userLocation.longitude)
+    this.perqsService.perqsList(this.userLocation.latitude, this.userLocation.longitude)
       .then(data => {
         me.common.closeLoading();
         data.sort(function (a, b) {
@@ -90,8 +94,18 @@ export class HomePage {
   openLink() {
     const browser = this.iab.create('https://ionicframework.com/', '_blank');
   }
-  loadFormatedDate(date){
-    var dates = this.common.formatDate(date);
-      return dates;
+  loadFormatedDate(date) {
+    if (date != null && date != 0) {
+      if (date < new Date().getTime()) {
+        return "";
+      }
+      var dates = this.common.formatDate(date);
+      return "Expires on " +dates;
+    }
+    else {
+      return "";
+    }
+
+
   }
 }

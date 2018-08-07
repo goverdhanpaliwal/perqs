@@ -42,11 +42,9 @@
     <ion-list no-lines padding>
         <ion-item tappable  (click)="showDetail(item)">
           <ion-thumbnail item-start>
-            <img src={{item.image}}>
+            <img src={{item.locationImage}}>
           </ion-thumbnail>
-          <h2>{{item.account}}</h2>
-          <h3>{{item.name}}</h3>
-          <h3>{{item.type}}</h3>
+          <h2>{{item.locationName}}</h2>
           <p>{{item.city}}, {{item.state}} </p>
           <p>{{item.phone}}</p>
         </ion-item>

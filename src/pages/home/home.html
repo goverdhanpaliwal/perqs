@@ -7,7 +7,7 @@
     </ion-buttons>
     <ion-title>perqs</ion-title>
   </ion-navbar>
-</ion-header>
+</ion-header> 
 
 <ion-content padding>
 
@@ -82,10 +82,10 @@
         <ion-list no-lines padding>
           <ion-item tappable (click)="showDetail(item)">
             <ion-thumbnail item-start>
-              <img src={{item.image}}>
+              <img src={{item.perqImage}}>
             </ion-thumbnail>
-            <h2>{{item.account}}</h2>
-            <h3>{{item.perqName}}</h3>
+            <h2>{{item.perqName}}</h2>
+            <p>{{item.perqLocation}}</p>
             <p [innerHtml] = loadFormatedDate(item.expires)></p>
             <p>{{item.distance.toFixed(2)}} KM away</p>
           </ion-item>
