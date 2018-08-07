@@ -105,7 +105,10 @@ export class HomePage {
     else {
       return "";
     }
-
-
   }
+  
+  segmentChanged(event){
+    this.segmentView = event.value;
+     this.changeDetector.detectChanges();
+}
 }

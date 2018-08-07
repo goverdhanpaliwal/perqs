@@ -75,11 +75,10 @@ export class LocationsList {
   filterItems(searchTerm) {
     this.filter = this.items;
     return this.items.filter((item) => {
-      return ((item.account.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) ||
-        (item.type.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) ||
+      return ((item.announcement.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) ||
         (item.state.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) ||
         (item.phone.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) ||
-        (item.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) ||
+        (item.locationName.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) ||
         (item.city.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1));
     });
 

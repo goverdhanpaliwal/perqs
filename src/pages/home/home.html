@@ -59,7 +59,7 @@
 
   <!-- TO DO: Implement Tabs Once we Have Two Feed Types (+ Favoriting) -->
   <!--***********  Segement tab ***********-->
-  <ion-segment mode="md" [(ngModel)]="segmentView" color="dkBlue">
+  <ion-segment mode="md" [(ngModel)]="segmentView" color="dkBlue"  (ionChange)="segmentChanged($event)">
     <ion-segment-button value="one">
       Recommended
     </ion-segment-button>

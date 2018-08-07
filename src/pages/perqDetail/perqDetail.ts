@@ -13,12 +13,15 @@ import { CommonProvider } from '../../providers/common/common';
 export class PerqDetail {
   items = {
     perqsImage: "",
-    perqLocation:"",
+    perqLocation: "",
     account: "",
     perqsKey: "",
     perqName: "",
     expires: "",
-    locationKey:"",
+    locationKey: "",
+    city: "",
+    state: "",
+    phone:''
   };
   isFavAdded: Boolean = false;
   favPerksKey = "";
@@ -34,7 +37,7 @@ export class PerqDetail {
     private perksService: PerqListService,
     public modalCtrl: ModalController) {
     this.items = navParams.data.item;
-    console.log('item '+this.items.perqLocation);
+    console.log('item ' + this.items.perqLocation);
     let user = this.dataService.getUserData();
     var me = this;
     me.common.startLoading();
@@ -81,7 +84,7 @@ export class PerqDetail {
         return "";
       }
       var dates = this.common.formatDate(date);
-      return "Expires on " +dates;
+      return "Expires on " + dates;
     }
     else {
       return "";

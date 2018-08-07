@@ -110,7 +110,6 @@ export class LocationsListMapPage {
 
     addInfoWindowToMarker(marker, data) {
         let id = data.locationKey;
-        debugger;
         var infoWindowContent = '<div id="iw-container">' +
             '<div class="iw-content">' +
             '<div class="iw-subTitle">' + data.locationName + '</div>' +
