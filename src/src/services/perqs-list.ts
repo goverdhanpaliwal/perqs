@@ -37,34 +37,40 @@ export class PerqListService {
             console.log(locationData);
             firebase.database().ref('perqs').orderByChild('locationId').equalTo(locationId).once('value').then(function (perqsData) {
               // i++;
+			  if(perqsData.numChildren() > 0)
+			  {
               var keyNames = Object.keys(perqsData.val());
               for (let name of keyNames) {
                 console.log(name);
                 var perqsRec = perqsData.val()[name];
-                perqs.push({
-                  'locationKey': locationData.key,
-                  'perqsKey': name,
-                  'announcement': locationData.val().announcement,
-                  'city': locationData.val().city,
-                  'instagram': locationData.val().instagram,
-                  'snapchat': locationData.val().snapchat,
-                  'facebook': locationData.val().facebook,
-                  'locationLat': locationData.val().lat,
-                  'locationLon': locationData.val().lon,
-                  'locationName': locationData.val().name,
-                  'phone': locationData.val().phone,
-                  'state': locationData.val().state,
-                  'locationImage': locationData.val().image,
-                  'perqImage': perqsRec.image,
-                  'perqLocation': perqsRec.location,
-                  // 'type': perqsRec.type,
-                  'account': perqsRec.account,
-                  'perqName': perqsRec.name,
-                  'expires': perqsRec.expires,
-                  'distance': knDistance
+                if (parseInt(perqsRec.expires) >= new Date().getTime()) {
+                  perqs.push({
+                    'locationKey': locationData.key,
+                    'perqsKey': name,
+                    'announcement': locationData.val().announcement,
+                    'city': locationData.val().city,
+                    'instagram': locationData.val().instagram,
+                    'snapchat': locationData.val().snapchat,
+                    'facebook': locationData.val().facebook,
+                    'locationLat': locationData.val().lat,
+                    'locationLon': locationData.val().lon,
+                    'locationName': locationData.val().name,
+                    'phone': locationData.val().phone,
+                    'state': locationData.val().state,
+                    'locationImage': locationData.val().image,
+                    'perqImage': perqsRec.image,
+                    'perqLocation': perqsRec.location,
+                    // 'type': perqsRec.type,
+                   // 'account': perqsRec.account,
+                    'perqName': perqsRec.name,
+                    'expires': perqsRec.expires,
+                    'distance': knDistance
 
-                });
+                  });
+                }
+
               }
+			  }
               resolve(perqs);
             });
           });
@@ -103,7 +109,8 @@ export class PerqListService {
         firebaseRef.child(key).once('value', function (jobsSnapshot) {
           let locationId = jobsSnapshot.val().locationId;
           firebase.database().ref('locations').child(locationId).once('value').then(function (locationData) {
-            console.log(locationData);
+             if(locationData.numChildren() > 0)
+			 {
             locations.push({
               'locationKey': locationData.key,
               'perqsKey': name,
@@ -121,7 +128,7 @@ export class PerqListService {
               'distance': knDistance
 
             });
-
+			 }
             resolve(locations);
 
           });
@@ -147,7 +154,7 @@ export class PerqListService {
       return new Promise((resolve, reject) => {
         firebaseRef.once('value', function (jobsSnapshot) {
           if (!jobsSnapshot.exists || jobsSnapshot.numChildren() == 0) {
-          return  resolve(items);
+            return resolve(items);
           }
           let snapshotObj = jobsSnapshot.val();
           var keyNames = Object.keys(snapshotObj);
@@ -221,19 +228,24 @@ export class PerqListService {
       var me = this;
       return new Promise((resolve, reject) => {
         firebase.database().ref('perqs/').orderByChild('locationId').equalTo(locationKey).once('value').then(function (perqsData) {
+			if(perqsData.numChildren() > 0)
+			 {
           var keyNames = Object.keys(perqsData.val());
           for (let name of keyNames) {
             console.log(name);
             var perqsRec = perqsData.val()[name];
-            perqs.push({
-              'perqsKey': name,
-              'perqImage': perqsRec.image,
-              'perqLocation': perqsRec.location,
-              'account': perqsRec.account,
-              'perqName': perqsRec.name,
-              'expires': perqsRec.expires
-            });
+            if (parseInt(perqsRec.expires) >= new Date().getTime()) {
+              perqs.push({
+                'perqsKey': name,
+                'perqImage': perqsRec.image,
+                'perqLocation': perqsRec.location,
+                //'account': perqsRec.account,
+                'perqName': perqsRec.name,
+                'expires': perqsRec.expires
+              });
+            }
           }
+			 }
           resolve(perqs);
         }, function (error) {
           reject(error);

@@ -31,9 +31,9 @@ export class LocationDetail {
     this.locationItem = this.navParams.get("LocationData");
     this.loadPerqs(this.locationItem.locationKey);
   }
-  segmentChanged(event){
-      this.segmentView = event.value;
-       this.changeDetector.detectChanges();
+  segmentChanged(event) {
+    this.segmentView = event.value;
+    this.changeDetector.detectChanges();
   }
 
   loadPerqs(locationId) {
@@ -43,9 +43,6 @@ export class LocationDetail {
       .then(data => {
         console.log(data);
         me.common.closeLoading();
-        data.sort(function (a, b) {
-          return a.distance - b.distance;
-        })
         me.items = data;
         me.changeDetector.detectChanges();
 
@@ -59,25 +56,46 @@ export class LocationDetail {
   }
 
   showDetail(item) {
-    this.navCtrl.push('PerqDetail', { item: item })
-    //const showDetail = this.modalCtrl.create('PerqDetail');
-    //showDetail.present();
+    let items = {
+      'locationKey': this.locationItem.locationKey,
+      'perqsKey': item.perqsKey,
+      'announcement': this.locationItem.announcement,
+      'city': this.locationItem.city,
+      'instagram': this.locationItem.instagram,
+      'snapchat': this.locationItem.snapchat,
+      'facebook': this.locationItem.facebook,
+      'locationLat': this.locationItem.locationLat,
+      'locationLon': this.locationItem.locationLon,
+      'locationName': this.locationItem.locationName,
+      'phone': this.locationItem.phone,
+      'state': this.locationItem.state,
+      'locationImage': this.locationItem.locationImage,
+      'perqImage': item.perqImage,
+      'perqLocation': item.perqLocation,
+      // 'type': perqsRec.type,
+     // 'account': item.account,
+      'perqName': item.perqName,
+      'expires': item.expires,
+      //   'distance': knDistance
+
+    }
+    this.navCtrl.push('PerqDetail', { item: items })
+
   }
   openLink() {
     const browser = this.iab.create('https://ionicframework.com/', '_blank');
   }
-    loadFormatedDate(date) {
+  loadFormatedDate(date) {
     if (date != null && date != 0) {
       if (date < new Date().getTime()) {
         return "";
       }
       var dates = this.common.formatDate(date);
-      return "Expires on " +dates;
+      return "Expires on " + dates;
     }
     else {
       return "";
     }
-
 
   }
   // ionViewDidLoad() {

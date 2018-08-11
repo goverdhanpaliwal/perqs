@@ -11,10 +11,10 @@ import { CommonProvider } from '../../providers/common/common';
   templateUrl: 'perqDetail.html'
 })
 export class PerqDetail {
-  items = {
+     items = {
     perqsImage: "",
     perqLocation: "",
-    account: "",
+    //account: "",
     perqsKey: "",
     perqName: "",
     expires: "",
@@ -46,9 +46,7 @@ export class PerqDetail {
       me.isFavAdded = resp.isFav;
       me.favPerksKey = resp.key;
       me.cd.detectChanges();
-
     });
-
   }
 
   closeModal() {

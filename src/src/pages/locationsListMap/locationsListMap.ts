@@ -113,7 +113,9 @@ export class LocationsListMapPage {
         var infoWindowContent = '<div id="iw-container">' +
             '<div class="iw-content">' +
             '<div class="iw-subTitle">' + data.locationName + '</div>' +
-            '<br><b>city:</b>' + data.city + '<br></p>' +
+            '<p><b>city:</b>' + data.city + '</p>' +
+            '<p><b>state:</b>' + data.state + '</p>' +
+            '<p><b>phone:</b>' + data.phone + '</p>' +
             '<button id =' + id + '  style="font-weight: 300;height: 3rem;background-color: #00B140;width: 126px;margin: -15px 0px 0px 70px;"  class="button button-md button-default button-default-md button-md-secondary">View Details</button>' +
             '</div>' +
             //'<div id="do-something-button">button</div>' +
@@ -123,24 +125,22 @@ export class LocationsListMapPage {
         //     disableAutoPan:false
         // });
         infoWindow.setContent(infoWindowContent);
-
+        var me = this;
         marker.addListener('click', () => {
             this.closeAllInfoWindows();
             infoWindow.open(this.map, marker);
 
+            document.getElementById(id).removeEventListener("click", myClick);
             // add listener that will capture the click event of the infoWindow
-            // google.maps.event.addListener(infoWindow, 'domready', () => {
-                var me =this;
-            document.getElementById(id).addEventListener('click', function () {
-               console.log(this.id);
-               let selectedItem =   me.items.find(item => item.locationKey === this.id);
-               // pass data to details page;
-                   me.navCtrl.push('LocationDetail',{'LocationData':  selectedItem });
-            });
-
-
+            document.getElementById(id).addEventListener('click', myClick);
         });
+        function myClick(event) {
+            let selectedItem = me.items.find(item => item.locationKey === this.id);
+            me.navCtrl.push('LocationDetail', { 'LocationData': selectedItem });
+        }
+
         this.infoWindows.push(infoWindow);
+
     }
 
     doSomething() {

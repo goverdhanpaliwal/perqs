@@ -1,13 +1,18 @@
-
 <ion-header>
-    <ion-navbar color="pqsBlue" [class.header-background]="showToolbar"  >
-        <!--<ion-buttons (click)="closeModal()" >
+  <ion-navbar color="pqsBlue" [class.header-background]="showToolbar">
+      <ion-title>perqs</ion-title>
+    <ion-buttons start>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="ios-contact-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+    <!--<ion-buttons (click)="closeModal()" >
             <button color="light" ion-button icon-only>
                 <ion-icon name="md-close"></ion-icon>CLOSE
             </button>
         </ion-buttons>-->
-    <ion-title>perqs</ion-title>
-    </ion-navbar>
+  
+  </ion-navbar>
 </ion-header>
 
 
@@ -16,26 +21,26 @@
   <div id="profile1-info" class="test-class" padding>
 
     <img src="{{locationItem.locationImage}}" width="100" height="100">
-    <h3 id="profile1-name">{{locationItem.name}}</h3>
+    <h3 id="profile1-name">{{locationItem.locationName}}</h3>
     <p>{{locationItem.city}}, {{locationItem.state}}</p>
     <!--<p>{{(profile2 | async)?.company}} &bull; {{(profile2 | async)?.position}}</p> -->
-    <button ion-button *ngIf="!following"  block color="pqsOrange" (click)="follow()">Follow</button>
-    <button ion-button icon-left *ngIf="following"  block color="gray" (click)="follow()">
+    <button ion-button *ngIf="!following" block color="pqsOrange" (click)="follow()">Follow</button>
+    <button ion-button icon-left *ngIf="following" block color="gray" (click)="follow()">
       <ion-icon name="checkmark"></ion-icon>
       Following
     </button>
   </div>
 
 
-<!--***********  About  ***********-->
+  <!--***********  About  ***********-->
 
   <ion-list no-lines text-wrap>
-      <ion-list-header>
-        <h2> Announcement</h2>
-      </ion-list-header>
-      <ion-item>
-        <p class="profile1-description">{{locationItem.announcement}}</p>
-      </ion-item>
+    <ion-list-header>
+      <h2> Announcement</h2>
+    </ion-list-header>
+    <ion-item>
+      <p class="profile1-description">{{locationItem.announcement}}</p>
+    </ion-item>
   </ion-list>
 
   <!--***********  Segement tab ***********-->
@@ -108,7 +113,7 @@
 
   <!--***********    Segement two  ***********-->
   <div *ngIf="segmentView ==='two'">
-       <div *ngIf="items.length == 0" class="no-data">
+    <div *ngIf="items.length == 0" class="no-data">
       Sorry! We couldn't find any Perqs near you.
       <p class="link" (click)="openLink()">Click here</p> to bring Perqs to your town
     </div>
@@ -121,7 +126,7 @@
             </ion-thumbnail>
             <h2>{{item.perqName}}</h2>
             <p>{{item.perqLocation}}</p>
-            <p [innerHtml] = loadFormatedDate(item.expires)></p>
+            <p [innerHtml]=loadFormatedDate(item.expires)></p>
           </ion-item>
         </ion-list>
       </div>
